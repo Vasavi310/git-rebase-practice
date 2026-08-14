@@ -1,28 +1,26 @@
-name: Job Output Practice
+name: GitHub Context Practice
 
 on:
   push:
 
 jobs:
 
-  build:
-    runs-on: ubuntu-latest
-
-    outputs:
-      version: ${{ steps.version-step.outputs.app_version }}
-
-    steps:
-
-      - name: Create version
-        id: version-step
-        run: echo "app_version=2.5.0" >> "$GITHUB_OUTPUT"
-
-
-  deploy:
-    needs: build
+  info:
     runs-on: ubuntu-latest
 
     steps:
 
-      - name: Show version
-        run: echo "Deploying version ${{ needs.build.outputs.version }}"
+      - name: Show repository
+        run: echo "Repository = ${{ github.repository }}"
+
+      - name: Show branch
+        run: echo "Branch = ${{ github.ref_name }}"
+
+      - name: Show commit
+        run: echo "Commit = ${{ github.sha }}"
+
+      - name: Show event
+        run: echo "Event = ${{ github.event_name }}"
+
+      - name: Show actor
+        run: echo "Triggered by = ${{ github.actor }}"
