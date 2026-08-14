@@ -1,4 +1,4 @@
-name: Basic CI
+name: Multiple Jobs Demo
 
 on:
   push:
@@ -6,15 +6,20 @@ on:
       - main
 
 jobs:
-  build:
+
+  check:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Show project files
+      - name: Check files
         run: ls -la
 
-      - name: Show notes.txt
-        run: cat notes.txt
+  hello:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Say Hello
+        run: echo "Hello from Job 2"
