@@ -1,0 +1,20 @@
+name: Artifacts Practice
+
+on:
+  push:
+
+jobs:
+  create-artifact:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create file
+        run: |
+          echo "Hello from GitHub Actions" > result.txt
+          echo "Artifacts are working!" >> result.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-artifact
+          path: result.txt
