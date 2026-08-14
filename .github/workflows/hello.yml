@@ -1,4 +1,4 @@
-name: Hello GitHub Actions
+name: Basic CI
 
 on:
   push:
@@ -6,12 +6,15 @@ on:
       - main
 
 jobs:
-  hello:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Say Hello
-        run: echo "Hello from GitHub Actions!"
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Show Git version
-        run: git --version
+      - name: Show project files
+        run: ls -la
+
+      - name: Show notes.txt
+        run: cat notes.txt
