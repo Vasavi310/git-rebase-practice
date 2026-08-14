@@ -1,18 +1,21 @@
-name: Trigger Demo
+name: Variables Demo
 
 on:
   push:
     branches:
-      - main
-
-  pull_request:
-    branches:
-      - main
+      - test-actions
 
 jobs:
-  test-trigger:
+  demo:
     runs-on: ubuntu-latest
 
+    env:
+      MESSAGE: "Hello from GitHub Actions"
+      PROJECT: "git-rebase-practice"
+
     steps:
-      - name: Show trigger
-        run: echo "GitHub Actions was triggered!"
+      - name: Show message
+        run: echo "$MESSAGE"
+
+      - name: Show project
+        run: echo "$PROJECT"
