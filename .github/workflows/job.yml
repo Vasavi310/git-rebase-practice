@@ -1,4 +1,4 @@
-name: Job Dependencies Practice
+name: Conditions Practice
 
 on:
   push:
@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Build application
+      - name: Build
         run: echo "Build completed successfully"
 
 
@@ -18,14 +18,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run tests
-        run: echo "Tests completed successfully"
+      - name: Run Tests
+        run: |
+          echo "Running tests..."
+          echo "Tests completed successfully"
 
 
   deploy:
     needs: test
+    if: success() && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy application
-        run: echo "Deployment completed successfully"
+      - name: Deploy
+        run: echo "Deploying to production"
+
+
+  failure-notification:
+    needs: test
+    if: failure()
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Failure Notification
+        run: echo "Something failed!"
+
+
+  cleanup:
+    needs: [build, test, deploy, failure-notification]
+    if: always()
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cleanup
+        run: echo "Cleanup always runs"
