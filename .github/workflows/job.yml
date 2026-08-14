@@ -1,4 +1,4 @@
-name: Conditions Practice
+name: Job Output Practice
 
 on:
   push:
@@ -8,47 +8,21 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    outputs:
+      version: ${{ steps.version-step.outputs.app_version }}
+
     steps:
-      - name: Build
-        run: echo "Build completed successfully"
+
+      - name: Create version
+        id: version-step
+        run: echo "app_version=2.5.0" >> "$GITHUB_OUTPUT"
 
 
-  test:
+  deploy:
     needs: build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run Tests
-        run: |
-          echo "Running tests..."
-          echo "Tests completed successfully"
 
-
-  deploy:
-    needs: test
-    if: success() && github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Deploy
-        run: echo "Deploying to production"
-
-
-  failure-notification:
-    needs: test
-    if: failure()
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Failure Notification
-        run: echo "Something failed!"
-
-
-  cleanup:
-    needs: [build, test, deploy, failure-notification]
-    if: always()
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Cleanup
-        run: echo "Cleanup always runs"
+      - name: Show version
+        run: echo "Deploying version ${{ needs.build.outputs.version }}"
