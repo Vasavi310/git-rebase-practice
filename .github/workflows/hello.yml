@@ -18,6 +18,7 @@ jobs:
         run: ls -la
 
   hello:
+    needs:check
     runs-on: ubuntu-latest
 
     steps:
