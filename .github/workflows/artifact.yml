@@ -1,20 +1,35 @@
-name: Artifacts Practice
+name: Artifact Practice
 
 on:
   push:
+    branches:
+      - main
 
 jobs:
+
   create-artifact:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Create file
-        run: |
-          echo "Hello from GitHub Actions" > result.txt
-          echo "Artifacts are working!" >> result.txt
+      - name: Create result file
+        run: echo "Hello from create-artifact job" > result.txt
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: my-artifact
           path: result.txt
+
+
+  download-artifact:
+    needs: create-artifact
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: my-artifact
+
+      - name: Display result
+        run: cat result.txt
