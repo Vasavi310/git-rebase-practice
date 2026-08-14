@@ -1,26 +1,18 @@
-name: Multiple Jobs Demo
+name: Trigger Demo
 
 on:
   push:
     branches:
       - main
 
+  pull_request:
+    branches:
+      - main
+
 jobs:
-
-  check:
+  test-trigger:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Check files
-        run: ls -la
-
-  hello:
-    needs: check
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Say Hello
-        run: echo "Hello from Job 2"
+      - name: Show trigger
+        run: echo "GitHub Actions was triggered!"
