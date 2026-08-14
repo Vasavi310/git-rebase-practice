@@ -1,26 +1,23 @@
-name: GitHub Context Practice
+name: Maven Cache Practice
 
 on:
   push:
 
 jobs:
-
-  info:
+  build:
     runs-on: ubuntu-latest
 
     steps:
 
-      - name: Show repository
-        run: echo "Repository = ${{ github.repository }}"
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Show branch
-        run: echo "Branch = ${{ github.ref_name }}"
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
 
-      - name: Show commit
-        run: echo "Commit = ${{ github.sha }}"
-
-      - name: Show event
-        run: echo "Event = ${{ github.event_name }}"
-
-      - name: Show actor
-        run: echo "Triggered by = ${{ github.actor }}"
+      - name: Build project
+        run: mvn clean package
