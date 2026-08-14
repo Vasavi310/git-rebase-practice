@@ -1,0 +1,8 @@
+name: Call Reusable Build
+
+on:
+  push:
+
+jobs:
+  call-build:
+    uses: ./.github/workflows/reusable-build.yml
