@@ -3,7 +3,7 @@ name: Variables Demo
 on:
   push:
     branches:
-      - main
+      - test-actions
 
 jobs:
   demo:
